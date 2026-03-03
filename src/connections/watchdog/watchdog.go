@@ -10,11 +10,12 @@ import (
 	"mginx/protocol/parsing"
 	"mginx/protocol/payloads"
 	"mginx/protocol/serializing"
+	"mginx/util"
 	"net"
 	"time"
 )
 
-func handleUpstreamStatusConnection(conn net.Conn, res chan int) {
+func handleUpstreamStatusConnection(conn net.Conn, res chan util.Pair[[]byte, int]) {
 	defer conn.Close()
 
 	conn.SetReadDeadline(time.Now().Add(1 * time.Second))
@@ -25,7 +26,7 @@ func handleUpstreamStatusConnection(conn net.Conn, res chan int) {
 	for {
 		n, err := conn.Read(data)
 		if err != nil {
-			res <- -1
+			res <- util.Pair[[]byte, int]{First: nil, Second: -1}
 			return
 		}
 
@@ -39,19 +40,21 @@ func handleUpstreamStatusConnection(conn net.Conn, res chan int) {
 			continue
 		}
 
-		statusResponse, err := parsing.ParseStatusResponse(packet.Payload[:len(packet.Payload)-int(packet.ActualLength-packet.Length)])
+		statusResponsePayload := packet.Payload[:len(packet.Payload)-int(packet.ActualLength-packet.Length)]
+
+		statusResponse, err := parsing.ParseStatusResponse(statusResponsePayload)
 		if err != nil {
-			res <- -1
+			res <- util.Pair[[]byte, int]{First: nil, Second: -1}
 			return
 		}
 
-		res <- statusResponse.Players.Online
+		res <- util.Pair[[]byte, int]{First: statusResponsePayload, Second: statusResponse.Players.Online}
 		return
 	}
 }
 
 func checkStatus(server *models.UpstreamServer) (int, error) {
-	res := make(chan int)
+	res := make(chan util.Pair[[]byte, int])
 
 	conn, address, err := upstream.StartClient(server.To.Hostname, server.To.Port, func(conn net.Conn) {
 		handleUpstreamStatusConnection(conn, res)
@@ -70,7 +73,12 @@ func checkStatus(server *models.UpstreamServer) (int, error) {
 
 	conn.Write(serializing.SerializeStatusRequest(payloads.StatusRequest{}))
 
-	return <-res, nil
+	result := <-res
+	if result.First != nil {
+		server.Watchdog.LastStatusResponse = result.First
+	}
+
+	return result.Second, nil
 }
 
 func WatchUpstream(server *models.UpstreamServer) {

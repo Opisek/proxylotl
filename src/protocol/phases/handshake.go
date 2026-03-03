@@ -51,7 +51,7 @@ func handleClientHandshake(client *models.DownstreamClient, packet payloads.Gene
 		return fmt.Errorf(`no upstream found for address "%v:%v"`, client.Address, client.Port)
 	}
 
-	if client.GamePhase == 0x01 {
+	if client.GamePhase == 0x01 && !client.Upstream.Watchdog.IsManaged() {
 		// Proxy the status
 		actualAddress, err := upstream.ProxyConnection(client)
 		if err != nil {

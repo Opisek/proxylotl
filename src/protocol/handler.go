@@ -19,6 +19,10 @@ func HandlePacket(client *models.DownstreamClient, packet payloads.GenericPacket
 		}
 	case 0x01:
 		fmt.Println("status phase")
+		err := phases.HandleStatusPhase(client, packet, conf)
+		if err != nil {
+			return errors.Join(errors.New("could not handle packet in status phase"), err)
+		}
 	case 0x02:
 		fmt.Println("login phase")
 		err := phases.HandleLoginPhase(client, packet, conf)

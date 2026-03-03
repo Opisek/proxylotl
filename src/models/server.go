@@ -74,6 +74,8 @@ type watchdogConfiguration struct {
 	StopCommand  string `yaml:"stop"`
 	GraceTime    uint   `yaml:"grace"`
 
+	LastStatusResponse []byte `yaml:""`
+
 	startupChannel chan bool `yaml:""`
 }
 

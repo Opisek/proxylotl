@@ -14,3 +14,11 @@ type StatusResponse struct {
 	Description any    `json:"description"`
 	Favicon     string `json:"favicon"`
 }
+
+type PingRequest struct {
+	Timestamp uint64
+}
+
+type PongResponse struct {
+	Timestamp uint64
+}
