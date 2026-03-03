@@ -12,6 +12,7 @@ import (
 	"mginx/protocol/serializing"
 	"mginx/util"
 	"net"
+	"os"
 	"time"
 )
 
@@ -110,6 +111,10 @@ func WatchUpstream(server *models.UpstreamServer) {
 		case <-startupChannel: // Interrupt the wait-time if we receive a start-up request
 			fmt.Printf("Starting up server %v\n", server.InternalName)
 			server.SetStarting()
+			err := util.RunCommand(server.Watchdog.StartCommand)
+			if err != nil {
+				fmt.Fprintln(os.Stderr, errors.Join(fmt.Errorf("could not run the start-up command for server %v", server.InternalName), err))
+			}
 			startupRequestTimestamp = time.Now()
 			continue
 		}
@@ -125,6 +130,10 @@ func WatchUpstream(server *models.UpstreamServer) {
 			// ...we had been trying to start the server up, but we did not succeed, try again.
 			if server.IsStartingUp() && currentTime.Sub(startupRequestTimestamp) > constants.TransientServerRetryTime*time.Second {
 				fmt.Printf("Could not start up server %v, retrying\n", server.InternalName)
+				err := util.RunCommand(server.Watchdog.StartCommand)
+				if err != nil {
+					fmt.Fprintln(os.Stderr, errors.Join(fmt.Errorf("could not run the start-up command for server %v", server.InternalName), err))
+				}
 				startupRequestTimestamp = time.Now()
 				continue
 			}
@@ -153,6 +162,10 @@ func WatchUpstream(server *models.UpstreamServer) {
 		} else if server.IsShuttingDown() && currentTime.Sub(shutdownRequestTimestamp) > 60*time.Second {
 			// If we were trying to shut the server down, but we did not succeed, try again
 			fmt.Printf("Could not shut down server %v, retrying\n", server.InternalName)
+			err := util.RunCommand(server.Watchdog.StopCommand)
+			if err != nil {
+				fmt.Fprintln(os.Stderr, errors.Join(fmt.Errorf("could not run the shut-down command for server %v", server.InternalName), err))
+			}
 			shutdownRequestTimestamp = time.Now()
 			continue
 		}
@@ -172,6 +185,10 @@ func WatchUpstream(server *models.UpstreamServer) {
 				if server.ClientsConnecting() == 0 {
 					fmt.Printf("Shutting down server %v due to inactivity\n", server.InternalName)
 					server.SetStopping()
+					err := util.RunCommand(server.Watchdog.StopCommand)
+					if err != nil {
+						fmt.Fprintln(os.Stderr, errors.Join(fmt.Errorf("could not run the shut-down command for server %v", server.InternalName), err))
+					}
 					shutdownRequestTimestamp = time.Now()
 				}
 			}
