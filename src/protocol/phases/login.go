@@ -108,7 +108,7 @@ func handleClientLoginAcknowledged(client *models.DownstreamClient, packet paylo
 
 	client.LoginFinished()
 	if client.Upstream.Redirect {
-		alreadyConnected := client.Upstream.Connect(client, func() {
+		transferFunc := func() {
 			client.Connection.Write(serializing.SerializeTransfer(payloads.Transfer{
 				Host: client.Upstream.To.Hostname,
 				Port: client.Upstream.To.Port,
@@ -118,7 +118,9 @@ func handleClientLoginAcknowledged(client *models.DownstreamClient, packet paylo
 			// Once the server is up, the client must transfer.
 			// If they don't, we eventually kill the connection.
 			client.Connection.SetWriteDeadline(time.Now().Add(10 * time.Second))
-		}, func() {})
+		}
+
+		alreadyConnected := client.Upstream.Connect(client, transferFunc, transferFunc)
 
 		if alreadyConnected {
 			return nil
