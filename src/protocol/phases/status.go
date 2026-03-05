@@ -3,11 +3,11 @@ package phases
 import (
 	"errors"
 	"fmt"
-	"proxelot/config"
-	"proxelot/models"
-	"proxelot/protocol/parsing"
-	"proxelot/protocol/payloads"
-	"proxelot/protocol/serializing"
+	"proxylotl/config"
+	"proxylotl/models"
+	"proxylotl/protocol/parsing"
+	"proxylotl/protocol/payloads"
+	"proxylotl/protocol/serializing"
 )
 
 func HandleStatusPhase(client *models.DownstreamClient, packet payloads.GenericPacket, conf *config.Configuration) error {

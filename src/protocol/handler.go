@@ -3,10 +3,10 @@ package protocol
 import (
 	"errors"
 	"fmt"
-	"proxelot/config"
-	"proxelot/models"
-	"proxelot/protocol/payloads"
-	"proxelot/protocol/phases"
+	"proxylotl/config"
+	"proxylotl/models"
+	"proxylotl/protocol/payloads"
+	"proxylotl/protocol/phases"
 )
 
 func HandlePacket(client *models.DownstreamClient, packet payloads.GenericPacket, conf *config.Configuration) error {

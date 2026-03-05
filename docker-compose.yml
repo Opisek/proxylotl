@@ -1,10 +1,10 @@
 services:
-  proxelot:
-    container_name: proxelot
-    image: opisek/proxelot:latest
+  proxylotl:
+    container_name: proxylotl
+    image: opisek/proxylotl:latest
     volumes:
-      - /srv/proxelot/scripts:/app/scripts:ro
-      - /srv/proxelot/config.yml:/app/config.yml:ro
+      - /srv/proxylotl/scripts:/app/scripts:ro
+      - /srv/proxylotl/config.yml:/app/config.yml:ro
       - /etc/localtime:/etc/localtime:ro
       - /etc/timezone:/etc/timezone:ro
     network_mode: host

@@ -3,8 +3,8 @@ package serializing
 import (
 	"bytes"
 	"encoding/json"
-	util "proxelot/protocol/internal"
-	"proxelot/protocol/payloads"
+	util "proxylotl/protocol/internal"
+	"proxylotl/protocol/payloads"
 )
 
 func SerializeLoginStart(payload payloads.LoginStart) []byte {

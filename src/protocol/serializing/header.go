@@ -2,7 +2,7 @@ package serializing
 
 import (
 	"bytes"
-	util "proxelot/protocol/internal"
+	util "proxylotl/protocol/internal"
 )
 
 func SerializePacketWithHeader(id uint64, payload []byte) []byte {

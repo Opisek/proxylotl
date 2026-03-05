@@ -3,12 +3,12 @@ package main
 import (
 	"errors"
 	"fmt"
-	"proxelot/config"
-	"proxelot/connections/downstream"
-	"proxelot/connections/watchdog"
-	"proxelot/models"
-	"proxelot/protocol/payloads"
-	"proxelot/util"
+	"proxylotl/config"
+	"proxylotl/connections/downstream"
+	"proxylotl/connections/watchdog"
+	"proxylotl/models"
+	"proxylotl/protocol/payloads"
+	"proxylotl/util"
 	"time"
 )
 

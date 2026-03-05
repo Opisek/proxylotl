@@ -1,7 +1,7 @@
 package payloads
 
 import (
-	"proxelot/protocol/dialog"
+	"proxylotl/protocol/dialog"
 )
 
 type KeepAlive struct {

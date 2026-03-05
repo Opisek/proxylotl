@@ -23,10 +23,10 @@ RUN apk update
 RUN apk add curl wget bash
 
 # Copy the executable
-COPY --from=build /app/src/proxelot .
+COPY --from=build /app/src/proxylotl .
 
 # Non-root
-RUN addgroup -S proxelot && adduser -S proxelot -G proxelot
-USER proxelot
+RUN addgroup -S proxylotl && adduser -S proxylotl -G proxylotl
+USER proxylotl
 
-ENTRYPOINT [ "./proxelot" ]
+ENTRYPOINT [ "./proxylotl" ]

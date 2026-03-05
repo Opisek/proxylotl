@@ -3,8 +3,8 @@ package parsing
 import (
 	"errors"
 	"fmt"
-	util "proxelot/protocol/internal"
-	"proxelot/protocol/payloads"
+	util "proxylotl/protocol/internal"
+	"proxylotl/protocol/payloads"
 )
 
 func ParseHandshake(buffer []byte) (payloads.Handshake, error) {

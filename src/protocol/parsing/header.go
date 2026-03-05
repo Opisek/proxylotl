@@ -1,8 +1,8 @@
 package parsing
 
 import (
-	util "proxelot/protocol/internal"
-	"proxelot/protocol/payloads"
+	util "proxylotl/protocol/internal"
+	"proxylotl/protocol/payloads"
 )
 
 func ParseHeader(buffer []byte) (payloads.GenericPacket, error) {

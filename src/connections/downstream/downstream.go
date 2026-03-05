@@ -6,12 +6,12 @@ import (
 	"fmt"
 	"net"
 	"os"
-	"proxelot/config"
-	"proxelot/models"
-	"proxelot/protocol"
-	"proxelot/protocol/parsing"
-	"proxelot/protocol/payloads"
-	"proxelot/util"
+	"proxylotl/config"
+	"proxylotl/models"
+	"proxylotl/protocol"
+	"proxylotl/protocol/parsing"
+	"proxylotl/protocol/payloads"
+	"proxylotl/util"
 	"time"
 )
 
@@ -22,7 +22,7 @@ func StartServer(address string, port uint16, packetQueue chan util.Pair[*models
 	}
 	defer listener.Close()
 
-	fmt.Printf("proxelot is listening on %v:%v\n", address, port)
+	fmt.Printf("proxylotl is listening on %v:%v\n", address, port)
 
 	for {
 		conn, err := listener.Accept()

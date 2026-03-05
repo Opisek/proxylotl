@@ -3,8 +3,8 @@ package parsing
 import (
 	"errors"
 	"fmt"
-	util "proxelot/protocol/internal"
-	"proxelot/protocol/payloads"
+	util "proxylotl/protocol/internal"
+	"proxylotl/protocol/payloads"
 )
 
 func ParseKeepAlive(buffer []byte) (payloads.KeepAlive, error) {

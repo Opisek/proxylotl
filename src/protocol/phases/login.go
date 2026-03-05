@@ -3,14 +3,14 @@ package phases
 import (
 	"errors"
 	"fmt"
-	"proxelot/config"
-	"proxelot/connections/upstream"
-	"proxelot/models"
-	"proxelot/protocol/dialog"
-	util "proxelot/protocol/internal"
-	"proxelot/protocol/parsing"
-	"proxelot/protocol/payloads"
-	"proxelot/protocol/serializing"
+	"proxylotl/config"
+	"proxylotl/connections/upstream"
+	"proxylotl/models"
+	"proxylotl/protocol/dialog"
+	util "proxylotl/protocol/internal"
+	"proxylotl/protocol/parsing"
+	"proxylotl/protocol/payloads"
+	"proxylotl/protocol/serializing"
 	"time"
 )
 

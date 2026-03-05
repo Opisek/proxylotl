@@ -4,7 +4,7 @@ import (
 	"errors"
 	"fmt"
 	"net"
-	"proxelot/models"
+	"proxylotl/models"
 	"strings"
 	"time"
 )

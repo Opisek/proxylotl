@@ -1,30 +1,30 @@
-# Proxelot
+# Proxylotl
 
-Proxelot is a powerful reverse proxy for Minecraft servers, ideal for the following scenarios:
+Proxylotl is a powerful reverse proxy for Minecraft servers, ideal for the following scenarios:
 1. You have multiple Minecraft servers and you want to connect to them with hostnames like `survival.example.com` and `creative.example.com` instead of by using different ports.
 2. You have one or more Minecraft servers that are not accessible from the internet and you want to proxy user connections to it.
 3. You have one or more Minecraft servers that you want to shut down and start up automatically to save resources.
 
-Further down you can find guides on how to install and configure Proxelot.
+Further down you can find guides on how to install and configure Proxylotl.
 
 # Installation
-The following section describes different ways to install Proxelot.
+The following section describes different ways to install Proxylotl.
 
-The simplest way is to use Docker compose with pre-built images. More advanced users may choose to build Docker images themselves or run Proxelot without Docker.
+The simplest way is to use Docker compose with pre-built images. More advanced users may choose to build Docker images themselves or run Proxylotl without Docker.
 
 ## Docker Compose (Recommended)
-Proxelot is available as a Docker container. The recommended setup is to use a Docker compose file on a Linux server.
+Proxylotl is available as a Docker container. The recommended setup is to use a Docker compose file on a Linux server.
 
 1. Make sure [Docker](https://docs.docker.com/engine/install/) is installed.
-2. Copy the Docker compose template from the source code or from below and put it on your server, for example at `~/docker/proxelot/docker-compose.yml`.
+2. Copy the Docker compose template from the source code or from below and put it on your server, for example at `~/docker/proxylotl/docker-compose.yml`.
   ```yml
   services:
-    proxelot:
-      container_name: proxelot
-      image: opisek/proxelot:latest
+    proxylotl:
+      container_name: proxylotl
+      image: opisek/proxylotl:latest
       volumes:
-        - /srv/proxelot/scripts:/app/scripts:ro
-        - /srv/proxelot/config.yml:/app/config.yml:ro
+        - /srv/proxylotl/scripts:/app/scripts:ro
+        - /srv/proxylotl/config.yml:/app/config.yml:ro
         - /etc/localtime:/etc/localtime:ro
         - /etc/timezone:/etc/timezone:ro
       network_mode: host
@@ -36,9 +36,9 @@ Proxelot is available as a Docker container. The recommended setup is to use a D
         context: .
         dockerfile: Dockerfile
   ```
-3. Feel free to adjust the volume mounts and environment variables to fit your setup. The default template assumes a directory `/srv/proxelot` containing the sub-directory `scripts` and the configuration file `config.yml`.
+3. Feel free to adjust the volume mounts and environment variables to fit your setup. The default template assumes a directory `/srv/proxylotl` containing the sub-directory `scripts` and the configuration file `config.yml`.
 4. Create a configuration file at the path specified in the previous step. You can keep it empty for now. A [configuration guide](#configuration) is available further down.
-5. While inside the directory containing the compose file (e.g., `~/docker/proxelot`) start the container:
+5. While inside the directory containing the compose file (e.g., `~/docker/proxylotl`) start the container:
 ```sh
 docker compose up -d
 ```
@@ -49,11 +49,11 @@ More advanced users may opt for building their own Docker image, either via the 
 1. Make sure [Docker](https://docs.docker.com/engine/install/) is installed.
 2. Clone this repository:
 ```sh
-git clone https://github.com/Opisek/proxelot.git
+git clone https://github.com/Opisek/proxylotl.git
 ```
 3. Enter the cloned repository:
 ```sh
-cd proxelot
+cd proxylotl
 ```
 4. Either build the image using Docker compose:
 ```sh
@@ -66,28 +66,28 @@ docker build .
 5. Further set-up is left up to the user.
 
 ## Baremetal (Advanced)
-More advanced users may opt for running Proxelot without Docker.
+More advanced users may opt for running Proxylotl without Docker.
 
 1. Make sure [Go](https://go.dev/doc/install) is installed (version 1.26.0 or newer).
 2. Clone this repository:
 ```sh
-git clone https://github.com/Opisek/proxelot.git
+git clone https://github.com/Opisek/proxylotl.git
 ```
 3. Enter the source directory:
 ```sh
-cd proxelot/src
+cd proxylotl/src
 ```
 4. Build the executable:
 ```sh
 go build
 ```
-5. Further set-up is left up to the user. Typically, you will want to create a system daemon out of the resulting executable `proxelot`.
+5. Further set-up is left up to the user. Typically, you will want to create a system daemon out of the resulting executable `proxylotl`.
 
 # Configuration
-This section describes how to configure Proxelot and use its various features.
+This section describes how to configure Proxylotl and use its various features.
 
 ## Upstreams
-First let us see how we can configure Proxelot to redirect us to different servers depending on the hostname we use.
+First let us see how we can configure Proxylotl to redirect us to different servers depending on the hostname we use.
 
 Let's say that players joining `survival.example.com` should be connected to `example.com:25566` and players joining `creative.example.com` should be connected to `example.com:25567`. The following configuration is sufficient for this:
 
@@ -119,7 +119,7 @@ servers:
 ```
 
 ## Proxy vs Redirect
-There are two distinct ways how a user is connected to an upstream server. By default, Proxelot proxies the connection. This means that all the traffic from the user first go to Proxelot and then to the upstream server.
+There are two distinct ways how a user is connected to an upstream server. By default, Proxylotl proxies the connection. This means that all the traffic from the user first go to Proxylotl and then to the upstream server.
 
 This is great when you only want to expose one port to the internet:
 
@@ -135,7 +135,7 @@ servers:
     to: example.com:25567
 ```
 
-An alternative is to use "redirects" otherwise known as "transfers. In this case, Proxelot will instruct the client to connect directly to the upstream server:
+An alternative is to use "redirects" otherwise known as "transfers. In this case, Proxylotl will instruct the client to connect directly to the upstream server:
 
 ```yml
 servers:
@@ -153,9 +153,9 @@ servers:
 
 For this to succeed, you must ensure that the upstream server is accessible from the internet, for example by forwarding its port as well.
 
-In this setup, no overhead or latency is introduced, since after connecting to the server, Proxelot is no longer involved in the clients' connections.
+In this setup, no overhead or latency is introduced, since after connecting to the server, Proxylotl is no longer involved in the clients' connections.
 
-While a client is connected to the upstream server, you can even restart or do maintenance on Proxelot without affecting active users' play sessions.
+While a client is connected to the upstream server, you can even restart or do maintenance on Proxylotl without affecting active users' play sessions.
 
 You can mix and match `redirect: false` (default) and `redirect: true` for different servers, depending on your needs.
 
@@ -189,15 +189,15 @@ Of course, these example commands would not actually do anything. How you config
 3. Create corresponding `.sh` scripts in the `scripts` directory and invoke them by setting `start: ./start.sh` and `stop: ./stop.sh`.
 4. Start the upstream server using Docker.
 
-You must, however, remember, that Proxelot (by default) runs in a dockerized environment. This means, that you cannot invoke scripts or commands on your host system by default, as they are isolated to the Proxelot Docker container.
+You must, however, remember, that Proxylotl (by default) runs in a dockerized environment. This means, that you cannot invoke scripts or commands on your host system by default, as they are isolated to the Proxylotl Docker container.
 
-This can be overcome either by running Proxelot on baremetal (for more advanced users), or by setting up a named pipe and a helper daemon on the host server.
+This can be overcome either by running Proxylotl on baremetal (for more advanced users), or by setting up a named pipe and a helper daemon on the host server.
 
-For example, if you have a Docker compose file at path `~/docker/minecraft/docker-compose.yml` with two containers called `survival` and `creative` and you want Proxelot to be able to start and stop them, your setup might look as follows:
+For example, if you have a Docker compose file at path `~/docker/minecraft/docker-compose.yml` with two containers called `survival` and `creative` and you want Proxylotl to be able to start and stop them, your setup might look as follows:
 
-1. Create a named pipe at `/srv/proxelot/scripts` (or wherever you mounted your `scripts` volume):
+1. Create a named pipe at `/srv/proxylotl/scripts` (or wherever you mounted your `scripts` volume):
 ```sh
-sudo mkfifo /srv/proxelot/scripts/pipe
+sudo mkfifo /srv/proxylotl/scripts/pipe
 ```
 2. Set your configuration file as follows:
 ```yml
@@ -219,11 +219,11 @@ servers:
       stop: echo "stop creative" >> ./scripts/pipe
       grace: 60
 ```
-3. Create a daemon script, for example at `~/scripts/proxelot-helper.sh`:
+3. Create a daemon script, for example at `~/scripts/proxylotl-helper.sh`:
 ```sh
 #!/bin/bash
 
-PIPE_PATH=/srv/proxelot/scripts/pipe
+PIPE_PATH=/srv/proxylotl/scripts/pipe
 COMPOSE_PATH=/home/YOUR_USERNAME_HERE/docker/minecraft/docker-compose.yml
 
 if [[ ! -p $PIPE_PATH ]]; then
@@ -250,15 +250,15 @@ done
 ```
 Remember to fill in `YOUR_USERNAME_HERE`.
 
-4. Set up the daemon service. On systemd-based distributions (like Debian or Ubuntu) this can be done by creating the file `/etc/systemd/system/proxelot-helper.service`:
+4. Set up the daemon service. On systemd-based distributions (like Debian or Ubuntu) this can be done by creating the file `/etc/systemd/system/proxylotl-helper.service`:
 ```sh
 [Unit]
-Description=Proxelot helper service for starting and stopping containers
+Description=Proxylotl helper service for starting and stopping containers
 
 [Service]
 Type=simple
 User=YOUR_USERNAME_HERE
-ExecStart=/home/YOUR_USERNAME_HERE/scripts/proxelot-helper.sh
+ExecStart=/home/YOUR_USERNAME_HERE/scripts/proxylotl-helper.sh
 Restart=on-failure
 
 [Install]
@@ -270,6 +270,6 @@ Remember to fill in `YOUR_USERNAME_HERE`.
 5. Start your daemon service. On systemd-based distributions this can be done as follows:
 ```sh
 sudo systemctl daemon-reload
-sudo systemctl enable proxelot-helper
-sudo systemctl start proxelot-helper
+sudo systemctl enable proxylotl-helper
+sudo systemctl start proxylotl-helper
 ```

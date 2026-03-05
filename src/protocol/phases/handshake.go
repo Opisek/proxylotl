@@ -3,12 +3,12 @@ package phases
 import (
 	"errors"
 	"fmt"
-	"proxelot/config"
-	"proxelot/connections/upstream"
-	"proxelot/models"
-	"proxelot/protocol/parsing"
-	"proxelot/protocol/payloads"
-	"proxelot/protocol/serializing"
+	"proxylotl/config"
+	"proxylotl/connections/upstream"
+	"proxylotl/models"
+	"proxylotl/protocol/parsing"
+	"proxylotl/protocol/payloads"
+	"proxylotl/protocol/serializing"
 )
 
 func HandleHandshakePhase(client *models.DownstreamClient, packet payloads.GenericPacket, conf *config.Configuration) error {

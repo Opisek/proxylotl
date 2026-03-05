@@ -14,7 +14,7 @@ servers:
   # we redirect the client to 1.2.3.4:25567.
   # This is useful when the upstream server is accessible from the internet,
   # because this variant does not introduce any additional latency or overhead once the connection is up.
-  # Additionally, the client's connection does not drop if you restart or do maintenance on Proxelot
+  # Additionally, the client's connection does not drop if you restart or do maintenance on Proxylotl
   creative:
     from:
       - creative.example.com

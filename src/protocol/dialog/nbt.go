@@ -2,7 +2,7 @@ package dialog
 
 import (
 	"bytes"
-	util "proxelot/protocol/internal"
+	util "proxylotl/protocol/internal"
 	"reflect"
 	"strings"
 )

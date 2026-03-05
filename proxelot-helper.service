@@ -1,10 +1,10 @@
 [Unit]
-Description=Proxelot helper service for starting and stopping containers
+Description=Proxylotl helper service for starting and stopping containers
 
 [Service]
 Type=simple
 User=YOUR_USERNAME_HERE
-ExecStart=/home/YOUR_USERNAME_HERE/scripts/proxelot-helper.sh
+ExecStart=/home/YOUR_USERNAME_HERE/scripts/proxylotl-helper.sh
 Restart=on-failure
 
 [Install]

@@ -1,4 +1,4 @@
-module proxelot
+module proxylotl
 
 go 1.22.0
 

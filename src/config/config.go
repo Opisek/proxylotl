@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"math"
 	"os"
-	"proxelot/models"
+	"proxylotl/models"
 	"strconv"
 
 	"github.com/goccy/go-yaml"
