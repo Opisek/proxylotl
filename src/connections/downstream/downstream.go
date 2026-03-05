@@ -72,7 +72,7 @@ func handleClientConnection(conn net.Conn, packetQueue chan util.Pair[*models.Do
 		}
 
 		remainingPayload := packet.Payload
-		cutIndex := len(remainingPayload) - int(packet.ActualLength-packet.Length)
+		cutIndex := uint64(len(remainingPayload)) - (packet.ActualLength - packet.Length)
 
 		packet.Payload = make([]byte, cutIndex)
 		copy(packet.Payload, remainingPayload[:cutIndex])
