@@ -1,21 +1,41 @@
-# Example configuration with two servers
+# Example configuration with three servers
 
 servers:
-  # When a client connects using the survival.example.com address, we create a
-  # proxy tunnel between the client and localhost:25566. This is useful when
-  # the upstream server is not accessible from the internet, for example if you
-  # only want to forward a single port.
+  # When a client connects using the survival.example.com address or example.com address,
+  # we create a proxy tunnel between the client and localhost:25566.
+  # This is useful when the upstream server is not accessible from the internet,
+  # for example if you only want to forward a single port.
   survival:
     from:
       - survival.example.com
     to: localhost:25566
 
-  # When a client connects using the creative.example.com address, we redirect
-  # the client to 1.2.3.4:25567. This is useful when the upstream server is
-  # accessible from the internet, because this variant does not introduce any
-  # additional latency or overhead once the connection is up.
+  # When a client connects using the creative.example.com address,
+  # we redirect the client to 1.2.3.4:25567.
+  # This is useful when the upstream server is accessible from the internet,
+  # because this variant does not introduce any additional latency or overhead once the connection is up.
+  # Additionally, the client's connection does not drop if you restart or do maintenance on Proxelot
   creative:
     from:
       - creative.example.com
     to: 1.2.3.4:25567
     redirect: true
+
+  # When a client connects using the modded.example.com address,
+  # we redirect the client to example.com:25568, similarly to the previous example.
+  # Furthermore, we enable the watchdog on this server,
+  # which automatically starts and stops the server to save on resources.
+  # When someone attempts to join the server,
+  # the command specified under "start" is executed.
+  # If nobody has been on the server for the grace period specified seconds,
+  # the command under specified "stop" is executed.
+  # What commands start and stop use is entirely up to your upstream server setup.
+  modded:
+    from:
+      - modded.example.com
+    to: 1.2.3.4:25567
+    redirect: true
+    watchdog:
+      start: "./scripts/modded/start.sh"
+      stop: "./scripts/modded/stop.sh"
+      grace: 60
