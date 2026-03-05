@@ -3,8 +3,8 @@ package upstream
 import (
 	"errors"
 	"fmt"
-	"mginx/models"
 	"net"
+	"proxelot/models"
 	"strings"
 	"time"
 )

@@ -1,6 +1,6 @@
 #!/bin/bash
 
-PIPE_PATH=/srv/minecraft/mginx/scripts/pipe
+PIPE_PATH=/srv/minecraft/proxelot/scripts/pipe
 COMPOSE_PATH=/home/opisek/docker/minecraft/docker-compose.yml
 
 if [[ ! -p $PIPE_PATH ]]; then

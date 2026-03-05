@@ -4,14 +4,14 @@ import (
 	"bytes"
 	"errors"
 	"fmt"
-	"mginx/config"
-	"mginx/models"
-	"mginx/protocol"
-	"mginx/protocol/parsing"
-	"mginx/protocol/payloads"
-	"mginx/util"
 	"net"
 	"os"
+	"proxelot/config"
+	"proxelot/models"
+	"proxelot/protocol"
+	"proxelot/protocol/parsing"
+	"proxelot/protocol/payloads"
+	"proxelot/util"
 	"time"
 )
 
@@ -22,7 +22,7 @@ func StartServer(address string, port uint16, packetQueue chan util.Pair[*models
 	}
 	defer listener.Close()
 
-	fmt.Printf("mginx is listening on %v:%v\n", address, port)
+	fmt.Printf("proxelot is listening on %v:%v\n", address, port)
 
 	for {
 		conn, err := listener.Accept()

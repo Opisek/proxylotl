@@ -23,10 +23,10 @@ RUN apk update
 RUN apk add curl wget bash
 
 # Copy the executable
-COPY --from=build /app/src/mginx .
+COPY --from=build /app/src/proxelot .
 
 # Non-root
-RUN addgroup -S mginx && adduser -S mginx -G mginx
-USER mginx
+RUN addgroup -S proxelot && adduser -S proxelot -G proxelot
+USER proxelot
 
-ENTRYPOINT [ "./mginx" ]
+ENTRYPOINT [ "./proxelot" ]

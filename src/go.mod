@@ -1,4 +1,4 @@
-module mginx
+module proxelot
 
 go 1.22.0
 

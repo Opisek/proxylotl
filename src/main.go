@@ -3,12 +3,12 @@ package main
 import (
 	"errors"
 	"fmt"
-	"mginx/config"
-	"mginx/connections/downstream"
-	"mginx/connections/watchdog"
-	"mginx/models"
-	"mginx/protocol/payloads"
-	"mginx/util"
+	"proxelot/config"
+	"proxelot/connections/downstream"
+	"proxelot/connections/watchdog"
+	"proxelot/models"
+	"proxelot/protocol/payloads"
+	"proxelot/util"
 	"time"
 )
 

@@ -3,8 +3,8 @@ package parsing
 import (
 	"errors"
 	"fmt"
-	util "mginx/protocol/internal"
-	"mginx/protocol/payloads"
+	util "proxelot/protocol/internal"
+	"proxelot/protocol/payloads"
 )
 
 func ParseKeepAlive(buffer []byte) (payloads.KeepAlive, error) {

@@ -2,7 +2,7 @@ package serializing
 
 import (
 	"bytes"
-	util "mginx/protocol/internal"
+	util "proxelot/protocol/internal"
 )
 
 func SerializePacketWithHeader(id uint64, payload []byte) []byte {

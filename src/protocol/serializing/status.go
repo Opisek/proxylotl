@@ -2,8 +2,8 @@ package serializing
 
 import (
 	"bytes"
-	util "mginx/protocol/internal"
-	"mginx/protocol/payloads"
+	util "proxelot/protocol/internal"
+	"proxelot/protocol/payloads"
 )
 
 func SerializeStatusRequest(payloads payloads.StatusRequest) []byte {

@@ -1,7 +1,7 @@
 package payloads
 
 import (
-	"mginx/protocol/dialog"
+	"proxelot/protocol/dialog"
 )
 
 type KeepAlive struct {

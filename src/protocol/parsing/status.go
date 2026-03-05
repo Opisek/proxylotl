@@ -4,8 +4,8 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	util "mginx/protocol/internal"
-	"mginx/protocol/payloads"
+	util "proxelot/protocol/internal"
+	"proxelot/protocol/payloads"
 )
 
 func ParseStatusRequest(buffer []byte) (payloads.StatusRequest, error) {

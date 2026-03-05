@@ -2,7 +2,7 @@ package dialog
 
 import (
 	"bytes"
-	util "mginx/protocol/internal"
+	util "proxelot/protocol/internal"
 	"reflect"
 	"strings"
 )

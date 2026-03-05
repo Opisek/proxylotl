@@ -1,8 +1,8 @@
 package parsing
 
 import (
-	util "mginx/protocol/internal"
-	"mginx/protocol/payloads"
+	util "proxelot/protocol/internal"
+	"proxelot/protocol/payloads"
 )
 
 func ParseHeader(buffer []byte) (payloads.GenericPacket, error) {

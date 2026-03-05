@@ -3,10 +3,10 @@ package protocol
 import (
 	"errors"
 	"fmt"
-	"mginx/config"
-	"mginx/models"
-	"mginx/protocol/payloads"
-	"mginx/protocol/phases"
+	"proxelot/config"
+	"proxelot/models"
+	"proxelot/protocol/payloads"
+	"proxelot/protocol/phases"
 )
 
 func HandlePacket(client *models.DownstreamClient, packet payloads.GenericPacket, conf *config.Configuration) error {

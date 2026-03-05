@@ -3,8 +3,8 @@ package config
 import (
 	"fmt"
 	"math"
-	"mginx/models"
 	"os"
+	"proxelot/models"
 	"strconv"
 
 	"github.com/goccy/go-yaml"

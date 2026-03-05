@@ -3,12 +3,12 @@ package phases
 import (
 	"errors"
 	"fmt"
-	"mginx/config"
-	"mginx/models"
-	util "mginx/protocol/internal"
-	"mginx/protocol/parsing"
-	"mginx/protocol/payloads"
-	"mginx/protocol/serializing"
+	"proxelot/config"
+	"proxelot/models"
+	util "proxelot/protocol/internal"
+	"proxelot/protocol/parsing"
+	"proxelot/protocol/payloads"
+	"proxelot/protocol/serializing"
 	"time"
 )
 
