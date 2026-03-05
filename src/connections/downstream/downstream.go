@@ -62,28 +62,30 @@ func handleClientConnection(conn net.Conn, packetQueue chan util.Pair[*models.Do
 
 		buffer.Write(data[:n]) // We must buffer incoming TCP packets until we have at least one complete Minecraft packet
 
-		// Check if we have buffered enough data to parse a complete packet
-		packet, err := parsing.ParseHeader(buffer.Bytes())
-		if err != nil {
-			continue
-		}
-		if packet.Length > packet.ActualLength {
-			continue
-		}
+		// Check if we have buffered enough data to parse one or more complete packets
+		for {
+			packet, err := parsing.ParseHeader(buffer.Bytes())
+			if err != nil {
+				break
+			}
+			if packet.Length > packet.ActualLength {
+				break
+			}
 
-		remainingPayload := packet.Payload
-		cutIndex := uint64(len(remainingPayload)) - (packet.ActualLength - packet.Length)
+			remainingPayload := packet.Payload
+			cutIndex := uint64(len(remainingPayload)) - (packet.ActualLength - packet.Length)
 
-		packet.Payload = make([]byte, cutIndex)
-		copy(packet.Payload, remainingPayload[:cutIndex])
+			packet.Payload = make([]byte, cutIndex)
+			copy(packet.Payload, remainingPayload[:cutIndex])
 
-		buffer.Reset()
-		buffer.Write(remainingPayload[cutIndex:])
+			buffer.Reset()
+			buffer.Write(remainingPayload[cutIndex:])
 
-		// Pass on a complete packet payload for furher processing
-		packetQueue <- util.Pair[*models.DownstreamClient, payloads.GenericPacket]{
-			First:  client,
-			Second: packet,
+			// Pass on a complete packet payload for furher processing
+			packetQueue <- util.Pair[*models.DownstreamClient, payloads.GenericPacket]{
+				First:  client,
+				Second: packet,
+			}
 		}
 	}
 }

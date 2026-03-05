@@ -4,7 +4,6 @@ import (
 	"bytes"
 	"errors"
 	"os/exec"
-	"strings"
 )
 
 type Pair[T, U any] struct {
@@ -13,19 +12,17 @@ type Pair[T, U any] struct {
 }
 
 func RunCommand(command string) error {
-	words := strings.Split(command, " ")
-
-	if len(words) == 0 {
+	if len(command) == 0 {
 		return errors.New("no command was specified")
 	}
 
-	cmd := exec.Command(words[0], words[1:]...)
+	cmd := exec.Command("bash", "-c", command)
 
-	var errOut bytes.Buffer
-	cmd.Stderr = &errOut
-
-	if err := cmd.Run(); err != nil {
-		return errors.Join(errors.New("an error occurred while running the command"), err, errors.New(errOut.String()))
+  var stderr bytes.Buffer
+  cmd.Stderr = &stderr
+  _, err := cmd.Output()
+	if err != nil {
+		return errors.Join(errors.New("an error occurred while running the command"), err, errors.New(stderr.String()))
 	}
 
 	return nil
