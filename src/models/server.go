@@ -95,36 +95,36 @@ func (watchdog *watchdogConfiguration) RegisterWatchdog(startupChannel chan bool
 func (watchdog *watchdogConfiguration) SaveStatus() {
 	file, err := os.Create(watchdog.statusPath)
 	if err != nil {
-		fmt.Fprintf(os.Stderr, "could not open server status file %v for writing: %v", watchdog.statusPath, err)
+		fmt.Fprintf(os.Stderr, "Could not open server status file %v for writing: %v\n", watchdog.statusPath, err)
 		return
 	}
 
 	defer func() {
 		if err := file.Close(); err != nil {
-			fmt.Fprintf(os.Stderr, "could not close server status file %v: %v", watchdog.statusPath, err)
+			fmt.Fprintf(os.Stderr, "Could not close server status file %v: %v\n", watchdog.statusPath, err)
 		}
 	}()
 
 	if _, err = file.Write(watchdog.LastStatusResponse); err != nil {
-		fmt.Fprintf(os.Stderr, "could not write server status to file %v: %v", watchdog.statusPath, err)
+		fmt.Fprintf(os.Stderr, "Could not write server status to file %v: %v\n", watchdog.statusPath, err)
 	}
 }
 
 func (watchdog *watchdogConfiguration) LoadStatus() {
 	file, err := os.Open(watchdog.statusPath)
 	if err != nil {
-		fmt.Fprintf(os.Stderr, "could not open server status file %v for reading: %v", watchdog.statusPath, err)
+		fmt.Fprintf(os.Stderr, "Could not open server status file %v for reading: %v\n", watchdog.statusPath, err)
 		return
 	}
 
 	defer func() {
 		if err := file.Close(); err != nil {
-			fmt.Fprintf(os.Stderr, "could not close server status file %v: %v", watchdog.statusPath, err)
+			fmt.Fprintf(os.Stderr, "Could not close server status file %v: %v\n", watchdog.statusPath, err)
 		}
 	}()
 
 	if _, err = file.Read(watchdog.LastStatusResponse); err != nil {
-		fmt.Fprintf(os.Stderr, "could not read server status from file %v: %v", watchdog.statusPath, err)
+		fmt.Fprintf(os.Stderr, "Could not read server status from file %v: %v\n", watchdog.statusPath, err)
 	}
 }
 

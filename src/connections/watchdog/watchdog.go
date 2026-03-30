@@ -98,7 +98,7 @@ func WatchUpstream(server *models.UpstreamServer) {
 	shutdownRequestTimestamp := time.Now()
 
 	startupChannel := make(chan bool)
-	server.Watchdog.RegisterWatchdog(startupChannel, filepath.Join("./status", fmt.Sprintf("%v.json", server.InternalName)))
+	server.Watchdog.RegisterWatchdog(startupChannel, filepath.Join("/app/status", fmt.Sprintf("%v.json", server.InternalName)))
 
 	for {
 		var waitDuration time.Duration
